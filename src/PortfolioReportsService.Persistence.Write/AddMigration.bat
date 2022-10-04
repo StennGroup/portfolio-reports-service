@@ -1,0 +1,1 @@
+dotnet ef migrations add %1 --context PortfolioReportsServiceDbContext --startup-project ..\PortfolioReportsService.WebApp\PortfolioReportsService.WebApp.csproj

@@ -1,0 +1,1 @@
+dotnet ef migrations remove --context PortfolioReportsServiceDbContext --startup-project ..\PortfolioReportsService.WebApp\PortfolioReportsService.WebApp.csproj

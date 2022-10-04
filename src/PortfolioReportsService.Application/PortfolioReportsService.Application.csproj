@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;1585</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="Seedwork.Auth" Version="14.0.0" />
+        <PackageReference Include="Seedwork.Messaging.Abstractions" Version="14.0.0" />
+        <PackageReference Include="Seedwork.UnitOfWork" Version="14.0.0" />
+    </ItemGroup>
+</Project>

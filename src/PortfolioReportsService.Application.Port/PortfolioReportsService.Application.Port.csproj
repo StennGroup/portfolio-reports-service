@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;1585</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Repositories" />
+    </ItemGroup>
+
+</Project>

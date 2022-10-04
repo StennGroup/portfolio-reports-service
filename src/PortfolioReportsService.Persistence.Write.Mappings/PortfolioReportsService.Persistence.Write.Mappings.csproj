@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;1585</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\PortfolioReportsService.Domain\PortfolioReportsService.Domain.csproj" />
+      <ProjectReference Include="..\PortfolioReportsService.Persistence\PortfolioReportsService.Persistence.csproj" />
+    </ItemGroup>
+</Project>

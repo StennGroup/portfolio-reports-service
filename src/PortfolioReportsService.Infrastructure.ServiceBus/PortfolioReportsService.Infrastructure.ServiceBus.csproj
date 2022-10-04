@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;1585</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Seedwork.ServiceBus" Version="14.0.0" />
+        <PackageReference Include="Seedwork.Web.ServiceBus" Version="14.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\PortfolioReportsService.Contracts\PortfolioReportsService.Contracts.csproj" />
+        <ProjectReference Include="..\PortfolioReportsService.Infrastructure.Configuration\PortfolioReportsService.Infrastructure.Configuration.csproj" />
+    </ItemGroup>
+</Project>
