@@ -13,36 +13,14 @@ using Serilog;
 using PortfolioReportsService.Infrastructure.Configuration;
 using PortfolioReportsService.Infrastructure.ServiceBus;
 using PortfolioReportsService.Persistence.Write;
+using System.Linq;
 
 namespace PortfolioReportsService.WebApp
 {
     public class PortfolioReportsServiceServiceHost : SeedworkHostWithServiceBus<Startup, PortfolioReportsServiceConfiguration, RequestLogContext, ServiceBusLogContext>
     {
         protected override IEnumerable<Func<IServiceProvider, Task>> GetBeforeStartupActions()
-        {
-            Func<IServiceProvider, Task> res = async services =>
-            {
-                using (var scope = services.CreateScope())
-                using (var context = scope.ServiceProvider.GetRequiredService<PortfolioReportsServiceDbContext>())
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
-
-                    EnvironmentChecker.CheckTheSafetyOfMigrations(context.Database.GetDbConnection().ConnectionString
-                        , scope.ServiceProvider.GetRequiredService<IConfiguration>());
-                    try
-                    {
-                        await context.Database.MigrateAsync();
-                        logger.Information("Migrations applied");
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Fatal(e, "Unable to apply migrations.");
-                        throw; // here we can throw and log.Fatal at the same time, because the server is not started
-                    }
-                }
-            };
-            return new[] { res };
-        }
+            => Enumerable.Empty<Func<IServiceProvider, Task>>();
 
         protected override IConfigureServiceBusEndpoint<PortfolioReportsServiceConfiguration> EndpointInWebContainerConfigurator => new PortfolioReportsServiceSendOnlyEndpointConfigurator();
 

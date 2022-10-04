@@ -44,7 +44,6 @@ namespace PortfolioReportsService.WebApp
             services.AddScoped<SecurityContextProvider>();
             services.AddScoped<IUserContext>(p => p.GetRequiredService<SecurityContextProvider>().Context);
 
-            ConfigureDbContexts(services);
             services.AddHttpContextAccessor();
 
             services.AddControllers(options =>
