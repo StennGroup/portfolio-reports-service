@@ -148,7 +148,6 @@ namespace PortfolioReportsService.WebApp
             services.AddDbContext<PortfolioReportsServiceDbContext>(options =>
             {
                 options
-                    .UseLazyLoadingProxies()
                     .UseSqlServer(ConfigurationDto.PortfolioReportsServiceDbContext);
             });
         }

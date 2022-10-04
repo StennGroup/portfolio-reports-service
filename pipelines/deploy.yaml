@@ -20,7 +20,7 @@ extends:
   parameters:
     DockerImages:
     - Img:
-      ServiceName: 'PortfolioReportsService'
+      ServiceName: 'portfolio-reports-service'
       DockerFilePath: 'src/PortfolioReportsService.WebApp/Dockerfile'
       BuildContext: './src'
     ExecuteTests: YesWithSqlServer
