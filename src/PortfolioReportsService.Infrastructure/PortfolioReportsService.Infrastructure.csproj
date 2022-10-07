@@ -10,6 +10,7 @@
         <PackageReference Include="Seedwork.Web" Version="14.0.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\PortfolioReportService.InteropAbstractions\PortfolioReportService.InteropAbstractions.csproj" />
       <ProjectReference Include="..\PortfolioReportsService.Application.Port\PortfolioReportsService.Application.Port.csproj" />
       <ProjectReference Include="..\PortfolioReportsService.Infrastructure.Configuration\PortfolioReportsService.Infrastructure.Configuration.csproj" />
     </ItemGroup>
