@@ -1,4 +1,5 @@
-﻿using PortfolioReportService.InteropAbstractions;
+﻿using PortfolioReportService.InteropAbstractions.OperationsApi;
+using PortfolioReportService.InteropAbstractions.OperationsApi.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

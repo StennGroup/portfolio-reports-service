@@ -1,4 +1,6 @@
-﻿namespace PortfolioReportService.InteropAbstractions.OperationsApi;
+﻿using PortfolioReportService.InteropAbstractions.OperationsApi.Dto;
+
+namespace PortfolioReportService.InteropAbstractions.OperationsApi;
 
 public interface IOperationsApi
 {
