@@ -12,15 +12,15 @@ namespace PortfolioReportsService.Infrastructure.OperationsApi;
 
 internal class OperationsApi : IOperationsApi
 {
-    private readonly HttpClient httpClient;
+    private readonly HttpClient _httpClient;
 
     public OperationsApi(HttpClient httpClient)
     {
-        this.httpClient = httpClient;
+        _httpClient = httpClient;
     }
 
     public Task<List<PortfolioInvoiceDto>> GetPortfolioInvoiceInfo()
-        => httpClient.GetFromJsonAsync<List<PortfolioInvoiceDto>>("api/odata/v1/invoices?" +
+        => _httpClient.GetFromJsonAsync<List<PortfolioInvoiceDto>>("api/odata/v1/invoices?" +
             "$filter=repaymentAmountOutstanding/amount gt 0 and owner eq 'SDF'&" +
             "$select=id,repaymentAmountOutstanding,repaymentAmount,supplyDate,dueDate,repaymentAmountNationalCurrency,repaymentAmountOutstandingNationalCurrency&" +
             "$expand=tradeRelation($select=id;$expand=buyer($select=duns,name,sourceSystemId,billingStreet,billingCity,billingPostalCode, country)," +

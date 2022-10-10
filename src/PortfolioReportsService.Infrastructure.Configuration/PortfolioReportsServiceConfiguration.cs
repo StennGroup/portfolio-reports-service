@@ -1,4 +1,5 @@
-﻿using Seedwork.Auth.Configuration;
+﻿using System;
+using Seedwork.Auth.Configuration;
 using Seedwork.Configuration;
 using Seedwork.HttpClientHelpers;
 using Seedwork.Logging;
@@ -32,5 +33,6 @@ namespace PortfolioReportsService.Infrastructure.Configuration
         public string OperationsApiAdClientSecret { get; set; }
         public string OperationsApiAdInstance { get; set; }
         public string OperationsApiAdTenantId { get; set; }
+        public string RootUrlOperationsApi { get; set; }
     }
 }
