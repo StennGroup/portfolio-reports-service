@@ -8,7 +8,7 @@ public class PortfolioInvoiceDto
     public MoneyDto RepaymentAmountOutstanding { get; set; } = null!;
     public MoneyDto RepaymentAmount { get; set; } = null!;
     public MoneyDto RepaymentAmountOutstandingNationalCurrency { get; set; } = null!;
-    public MoneyDto repaymentAmountNationalCurrency { get; set; } = null!;
+    public MoneyDto RepaymentAmountNationalCurrency { get; set; } = null!;
     public TradeRelationDto TradeRelation { get; set; } = null!;
 
 }

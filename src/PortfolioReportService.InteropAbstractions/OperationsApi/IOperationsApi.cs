@@ -4,5 +4,6 @@ namespace PortfolioReportService.InteropAbstractions.OperationsApi;
 
 public interface IOperationsApi
 {
-    Task<List<PortfolioInvoiceDto>> GetPortfolioInvoiceInfo();
+    Task<IReadOnlyCollection<PortfolioInvoiceDto>> GetPortfolioInvoiceInfo();
+    Task<List<CountryDto>> GetCountriesInfo();
 }

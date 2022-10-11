@@ -13,9 +13,5 @@
     <ItemGroup>
         <ProjectReference Include="..\PortfolioReportsService.WebApp\PortfolioReportsService.WebApp.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Common" />
-      <Folder Include="Tools" />
-    </ItemGroup>
 
 </Project>
