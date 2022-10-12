@@ -20,12 +20,13 @@ public class AtradiusReportJobService
     {
         var portfolio = await _operationsApi.GetPortfolioInvoiceInfo();
         var countries = await _operationsApi.GetCountriesInfo();
+        
         var countryCodeLookup = countries.ToDictionary(c => c.Code);
         var customerPairs = portfolio.Select(i => i.TradeRelation).ToList();
+        var customersFile = _reportGenerator.GenerateCustomerReport(customerPairs, countryCodeLookup);
         
-        var customersFile = _reportGenerator.GenerateCustomerReport(customerPairs,
-            countryCodeLookup);
-        
+        var invoicesFile = _reportGenerator.GenerateInvoicesReport(portfolio);
+
         //todo add armast file generation and ftp sending
     }
 }

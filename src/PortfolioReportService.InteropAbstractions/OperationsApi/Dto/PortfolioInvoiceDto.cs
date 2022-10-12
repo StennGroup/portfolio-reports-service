@@ -2,6 +2,7 @@
 
 public class PortfolioInvoiceDto
 {
+    public Guid Id { get; set; }
     public string Number { get; set; } = null!;
     public DateTime SupplyDate { get; set; }
     public DateTime DueDate { get; set; }

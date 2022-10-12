@@ -21,9 +21,7 @@ public class CsvBuilder<T>
     public void Write(CsvWriter writer, IReadOnlyCollection<T> data)
     {
         foreach (var (fieldName, _) in _fields)
-        {
             writer.WriteField(fieldName);
-        }
 
         writer.NextRecord();
         foreach (var entry in data)
