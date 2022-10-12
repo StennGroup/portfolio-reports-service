@@ -90,8 +90,7 @@ namespace PortfolioReportsService.WebApp
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)
         {
-            builder.AddDbContextCheck<PortfolioReportsServiceDbContext>(
-                "PortfolioReportsServiceDbContext DB", tags: new[] { WebHealthCheckStandardTags.Readiness });
+           
         }
 
         protected override void DoConfigure(IApplicationBuilder builder)
