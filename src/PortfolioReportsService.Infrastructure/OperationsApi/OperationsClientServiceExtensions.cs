@@ -20,7 +20,7 @@ public static class OperationsClientServiceExtensions
         services.AddHttpClient<IOperationsApi, OperationsApi>(
                 client => client.BaseAddress = new Uri($"{configuration.RootUrlOperationsApi}/"))
             .AddHttpMessageHandler<OperationsApiAuthenticationHandler>()
-            .AddHttpMessageHandler<LoggingScopeHttpMessageHandler>();
+            .AddHttpMessageHandler<HttpLoggingHandler>();
         return services;
     }
 

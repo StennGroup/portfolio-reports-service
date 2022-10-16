@@ -23,7 +23,7 @@ public class AtradiusReportController: Controller
         var reportFiles = await _reportService.SendReport();
         using (var memoryStream = new MemoryStream())
         {
-            using (var archive = new ZipArchive(memoryStream))
+            using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
             {
                 var arcustEntry = archive.CreateEntry("ARCUST.txt");
                 using (var fileStream = arcustEntry.Open())
@@ -33,8 +33,8 @@ public class AtradiusReportController: Controller
                 using (var fileStream = armastEntry.Open())
                     fileStream.Write(reportFiles.Armcust);
             }
-
-            return File(memoryStream, "application/zip", $"atradius_report_{DateTime.Today:YYYY_MM_dd}");
+            
+            return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:YYYY_MM_dd}");
         }
         
         
