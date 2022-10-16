@@ -33,5 +33,6 @@ namespace PortfolioReportsService.Infrastructure.Configuration
         public string OperationsApiAdInstance { get; set; }
         public string OperationsApiAdTenantId { get; set; }
         public string RootUrlOperationsApi { get; set; }
+        public BasicAuthentication BasicAuthentication { get; set; }
     }
 }

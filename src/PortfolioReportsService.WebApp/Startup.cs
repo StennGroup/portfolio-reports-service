@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using idunno.Authentication.Basic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -93,7 +96,6 @@ namespace PortfolioReportsService.WebApp
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)
         {
-           
         }
 
         protected override void DoConfigure(IApplicationBuilder builder)
@@ -119,38 +121,40 @@ namespace PortfolioReportsService.WebApp
             @"\/favicon.*"
         });
 
-        private static void ConfigureAuthentication(IServiceCollection services, Auth0Configuration configuration,
+        private void ConfigureAuthentication(IServiceCollection services, Auth0Configuration configuration,
             bool development = true)
         {
-            var builder = AuthBuilder
-                .CreateDefaultAuth0BearerAuthentication(
-                    services,
-                    configuration.Auth0Domain,
-                    configuration.Auth0Audience,
-                    configuration.Auth0OpenIdConnectConfigurationEndpoint)
-                .AddAuthLogger<AuthLogger>()
-                .AddTokenExtractor<DefaultTokenExtractor>()
-                .AddTokenValidator<DefaultTokenValidator>();
+            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasic(options =>
+                {
+                    options.Realm = "Operations Notifier API";
+                    options.AllowInsecureProtocol = false;
+                    options.Events = new BasicAuthenticationEvents
+                    {
+                        OnValidateCredentials = ctx =>
+                        {
+                            if (ctx.Username == ConfigurationDto.BasicAuthentication.Login &&
+                                ctx.Password == ConfigurationDto.BasicAuthentication.Password)
+                            {
+                                var claims = new[]
+                                {
+                                    new Claim(ClaimTypes.NameIdentifier, ctx.Username, ClaimValueTypes.String,
+                                        ctx.Options.ClaimsIssuer),
+                                    new Claim(ClaimTypes.Name, ctx.Username, ClaimValueTypes.String,
+                                        ctx.Options.ClaimsIssuer)
+                                };
+                                ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, ctx.Scheme.Name));
+                                ctx.Success();
+                            }
+                            else
+                            {
+                                ctx.Fail("Invalid login or password");
+                            }
 
-            if (development)
-            {
-                builder
-                    .AddTokenValidator<OfflineTokenValidator>()
-                    .DisableOnBuildOpenIdConfigurationEndpointCheck();
-            }
-
-            builder
-                .AddDefaultUserWithoutAuthorizationFlowHandler()
-                .Build();
-        }
-
-        private void ConfigureDbContexts(IServiceCollection services)
-        {
-            services.AddDbContext<PortfolioReportsServiceDbContext>(options =>
-            {
-                options
-                    .UseSqlServer(ConfigurationDto.PortfolioReportsServiceDbContext);
-            });
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
         }
     }
 }
