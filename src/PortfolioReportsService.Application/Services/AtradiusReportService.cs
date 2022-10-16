@@ -5,18 +5,24 @@ using PortfolioReportsService.Application.Interfaces;
 
 namespace PortfolioReportsService.Application.Services;
 
-public class AtradiusReportJobService
+public class AtradiusReports
+{
+    public byte[] Armast { get; set; }
+    public byte[] Armcust { get; set; }
+}
+
+public class AtradiusReportService
 {
     private readonly IOperationsApi _operationsApi;
     private readonly IAtradiusReportGenerator _reportGenerator;
 
-    public AtradiusReportJobService(IOperationsApi operationsApi, IAtradiusReportGenerator reportGenerator)
+    public AtradiusReportService(IOperationsApi operationsApi, IAtradiusReportGenerator reportGenerator)
     {
         _operationsApi = operationsApi;
         _reportGenerator = reportGenerator;
     }
 
-    public async Task SendReport()
+    public async Task<AtradiusReports> SendReport()
     {
         var portfolio = await _operationsApi.GetPortfolioInvoiceInfo();
         var countries = await _operationsApi.GetCountriesInfo();
@@ -27,6 +33,10 @@ public class AtradiusReportJobService
         
         var invoicesFile = _reportGenerator.GenerateInvoicesReport(portfolio);
 
-        //todo add armast file generation and ftp sending
+        return new AtradiusReports
+        {
+            Armast = invoicesFile,
+            Armcust = customersFile
+        };
     }
 }

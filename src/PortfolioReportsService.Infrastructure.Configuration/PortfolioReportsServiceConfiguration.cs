@@ -1,5 +1,4 @@
-﻿using System;
-using Seedwork.Auth.Configuration;
+﻿using Seedwork.Auth.Configuration;
 using Seedwork.Configuration;
 using Seedwork.HttpClientHelpers;
 using Seedwork.Logging;

@@ -16,9 +16,12 @@ using Seedwork.Web.Extensions;
 using Seedwork.Web.HealthChecks;
 using Seedwork.Web.Middleware;
 using PortfolioReportsService.Application;
+using PortfolioReportsService.Application.Interfaces;
 using PortfolioReportsService.Application.Port;
+using PortfolioReportsService.Application.Services;
 using PortfolioReportsService.Infrastructure;
 using PortfolioReportsService.Infrastructure.Configuration;
+using PortfolioReportsService.Infrastructure.OperationsApi;
 using PortfolioReportsService.Infrastructure.Web;
 using PortfolioReportsService.Persistence;
 using PortfolioReportsService.Persistence.Write;
@@ -44,12 +47,15 @@ namespace PortfolioReportsService.WebApp
             services.AddScoped<SecurityContextProvider>();
             services.AddScoped<IUserContext>(p => p.GetRequiredService<SecurityContextProvider>().Context);
 
+            services.AddScoped<IAtradiusReportGenerator, AtradiusReportGenerator>();
+            services.AddScoped<AtradiusReportService>();
+            services.AddOperationsClient(serviceConfiguration);
+
             services.AddHttpContextAccessor();
 
             services.AddControllers(options =>
                 {
                     options.Filters.Add<PerformanceLoggerFilter>();
-                    options.Filters.Add<TransactionControlFilter>();
                     options.Filters.Add(new AuthorizeFilter());
                 })
                 .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
@@ -76,16 +82,13 @@ namespace PortfolioReportsService.WebApp
                             .AllowAnyHeader();
                     });
             });
-
-            services.AddUnitOfWork<PortfolioReportsServiceDbContext>();
-            services.AddTaskExecutor();
+            
 
             services.AddApiVersion();
             if (ConfigurationDto.ConfigType != ConfigType.Prod)
                 services.AddSwagger();
             services
-                .AddApplicationServices()
-                .AddRepositories();
+                .AddApplicationServices();
         }
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)
