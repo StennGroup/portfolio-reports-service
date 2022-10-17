@@ -8,7 +8,7 @@ using PortfolioReportsService.Infrastructure.OperationsApi;
 namespace PortfolioReportsService.UnitTests.IntegrationTests;
 
 [TestFixture]
-[Explicit("Run only to ensure contract with your eyes")]
+[Explicit("Run only to check contract with your eyes")]
 public class OperationsApiTests
 {
     [Test]
