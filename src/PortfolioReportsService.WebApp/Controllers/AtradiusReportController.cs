@@ -4,11 +4,13 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioReportsService.Application.Services;
+using Seedwork.UnitOfWork;
+using Seedwork.Web;
 
 namespace PortfolioReportsService.WebApp.Controllers;
 
 [Route("api/v1/report")]
-public class AtradiusReportController: Controller
+public class AtradiusReportController : Controller
 {
     private readonly AtradiusReportService _reportService;
 
@@ -16,8 +18,9 @@ public class AtradiusReportController: Controller
     {
         _reportService = reportService;
     }
+    
 
-    [HttpGet]
+    [HttpGet("generate")]
     public async Task<FileResult> GetAtradiusReport()
     {
         var reportFiles = await _reportService.GenerateReport();
@@ -28,16 +31,13 @@ public class AtradiusReportController: Controller
                 var arcustEntry = archive.CreateEntry("ARCUST.txt");
                 using (var fileStream = arcustEntry.Open())
                     fileStream.Write(reportFiles.Armcust);
-           
+
                 var armastEntry = archive.CreateEntry("ARMAST.txt");
                 using (var fileStream = armastEntry.Open())
                     fileStream.Write(reportFiles.Armcust);
             }
-            
+
             return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}");
         }
-        
-        
-        
     }
 }
