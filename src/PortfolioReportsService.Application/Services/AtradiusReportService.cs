@@ -22,7 +22,7 @@ public class AtradiusReportService
         _reportGenerator = reportGenerator;
     }
 
-    public async Task<AtradiusReports> SendReport()
+    public async Task<AtradiusReports> GenerateReport()
     {
         var portfolio = await _operationsApi.GetPortfolioInvoiceInfo();
         var countries = await _operationsApi.GetCountriesInfo();

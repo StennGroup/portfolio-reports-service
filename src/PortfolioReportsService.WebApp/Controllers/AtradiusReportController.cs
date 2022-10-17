@@ -20,7 +20,7 @@ public class AtradiusReportController: Controller
     [HttpGet]
     public async Task<FileResult> GetAtradiusReport()
     {
-        var reportFiles = await _reportService.SendReport();
+        var reportFiles = await _reportService.GenerateReport();
         using (var memoryStream = new MemoryStream())
         {
             using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
@@ -29,12 +29,12 @@ public class AtradiusReportController: Controller
                 using (var fileStream = arcustEntry.Open())
                     fileStream.Write(reportFiles.Armcust);
            
-                var armastEntry = archive.CreateEntry("ARMUST.txt");
+                var armastEntry = archive.CreateEntry("ARMAST.txt");
                 using (var fileStream = armastEntry.Open())
                     fileStream.Write(reportFiles.Armcust);
             }
             
-            return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:YYYY_MM_dd}");
+            return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}");
         }
         
         
