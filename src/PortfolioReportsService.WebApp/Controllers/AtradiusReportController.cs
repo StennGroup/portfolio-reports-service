@@ -36,8 +36,5 @@ public class AtradiusReportController: Controller
             
             return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}");
         }
-        
-        
-        
     }
 }
