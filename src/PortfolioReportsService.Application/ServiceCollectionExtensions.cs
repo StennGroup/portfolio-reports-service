@@ -9,7 +9,7 @@ namespace PortfolioReportsService.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IAtradiusReportGenerator, AtradiusReportGenerator>();
-            serviceCollection.AddScoped<AtradiusReportService>();
+            serviceCollection.AddScoped<IAtradiusReportService, AtradiusReportService>();
             serviceCollection.AddAutoMapper(typeof(AutoMapperProfile));
             return serviceCollection;
         }

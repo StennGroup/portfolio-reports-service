@@ -90,6 +90,8 @@ namespace PortfolioReportsService.WebApp
                 services.AddSwagger();
             services
                 .AddApplicationServices();
+            
+            services.AddScoped<LongTaskWebExecutor>();
         }
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)
