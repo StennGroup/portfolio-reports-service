@@ -17,14 +17,9 @@ using System.Linq;
 
 namespace PortfolioReportsService.WebApp
 {
-    public class PortfolioReportsServiceServiceHost : SeedworkHostWithServiceBus<Startup, PortfolioReportsServiceConfiguration, RequestLogContext, ServiceBusLogContext>
+    public class PortfolioReportsServiceServiceHost : SeedworkHost<Startup, PortfolioReportsServiceConfiguration, RequestLogContext>
     {
         protected override IEnumerable<Func<IServiceProvider, Task>> GetBeforeStartupActions()
             => Enumerable.Empty<Func<IServiceProvider, Task>>();
-
-        protected override IConfigureServiceBusEndpoint<PortfolioReportsServiceConfiguration> EndpointInWebContainerConfigurator => new PortfolioReportsServiceSendOnlyEndpointConfigurator();
-
-        protected override IEnumerable<IConfigureProcessingServiceBusEndpoint<PortfolioReportsServiceConfiguration>> EndpointsInSeparateContainersConfigurators =>
-            new[] { new PortfolioReportsServiceProcessingEndpointConfigurator() };
     }
 }
