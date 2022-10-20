@@ -31,7 +31,7 @@ public class AtradiusReportController: Controller
            
                 var armastEntry = archive.CreateEntry("ARMAST.txt");
                 using (var fileStream = armastEntry.Open())
-                    fileStream.Write(reportFiles.Armcust);
+                    fileStream.Write(reportFiles.Armast);
             }
             
             return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}.zip");
