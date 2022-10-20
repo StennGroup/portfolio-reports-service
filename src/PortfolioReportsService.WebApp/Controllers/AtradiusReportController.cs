@@ -34,7 +34,7 @@ public class AtradiusReportController: Controller
                     fileStream.Write(reportFiles.Armcust);
             }
             
-            return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}");
+            return File(memoryStream.ToArray(), "application/zip", $"atradius_report_{DateTime.Today:yyyy_MM_dd}.zip");
         }
     }
 }
