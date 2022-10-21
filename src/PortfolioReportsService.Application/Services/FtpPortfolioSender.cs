@@ -23,8 +23,8 @@ class FtpPortfolioSender : IPortfolioSender
             report.Armast.Length, report.Armcust.Length);
         using var ftpClient = new AsyncFtpClient(_config.FtpConfig.Url, _config.FtpConfig.Login, _config.FtpConfig.Password);
         await ftpClient.AutoConnect();
-        await ftpClient.UploadBytes(report.Armast, "/ARMAST.txt");
-        await ftpClient.UploadBytes(report.Armcust, "/ARCUST.txt");
+        await ftpClient.UploadBytes(report.Armast, "/to_atradius/ARMAST.txt");
+        await ftpClient.UploadBytes(report.Armcust, "/to_atradius/ARCUST.txt");
         await ftpClient.Disconnect();
         _logger.Information("Report files have been uploaded to ftp");
     }
