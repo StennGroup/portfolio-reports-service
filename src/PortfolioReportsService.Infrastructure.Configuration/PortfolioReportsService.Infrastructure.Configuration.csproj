@@ -11,5 +11,6 @@
       <PackageReference Include="Seedwork.HttpClientHelpers" Version="14.0.0" />
       <PackageReference Include="Seedwork.Logging" Version="14.5.7" />
       <PackageReference Include="Seedwork.ServiceBus" Version="14.0.0" />
+      <PackageReference Include="Seedwork.Web" Version="14.0.0" />
     </ItemGroup>
 </Project>

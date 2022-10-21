@@ -3,6 +3,7 @@ using Seedwork.Configuration;
 using Seedwork.HttpClientHelpers;
 using Seedwork.Logging;
 using Seedwork.ServiceBus;
+using Seedwork.Web;
 
 namespace PortfolioReportsService.Infrastructure.Configuration
 {
@@ -10,7 +11,8 @@ namespace PortfolioReportsService.Infrastructure.Configuration
         ConfigurationBaseDto,
         ILoggingConfiguration,
         IRequestResponseLoggerMiddlewareConfiguration,
-        IServiceBusConfiguration
+        IServiceBusConfiguration,
+        ILongTasksWebExecutorConfiguration
     {
         public string PortfolioReportsServiceDbContext { get; set; }
 
@@ -35,5 +37,6 @@ namespace PortfolioReportsService.Infrastructure.Configuration
         public string RootUrlOperationsApi { get; set; }
         public BasicAuthentication BasicAuthentication { get; set; }
         public AtradiusFtpConfig FtpConfig { get; set; }
+        public LongTasksWebExecutorConfig LongTasksWebExecutorConfig { get; set; }
     }
 }
