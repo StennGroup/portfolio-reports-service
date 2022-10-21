@@ -2,11 +2,8 @@
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
-using FluentFTP;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioReportsService.Application.Interfaces;
-using PortfolioReportsService.Application.Services;
-using Seedwork.UnitOfWork;
 using Seedwork.Web;
 
 namespace PortfolioReportsService.WebApp.Controllers;
