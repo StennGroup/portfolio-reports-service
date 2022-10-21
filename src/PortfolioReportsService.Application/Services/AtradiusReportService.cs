@@ -27,18 +27,18 @@ public class AtradiusReportService : IAtradiusReportService
 
     public async Task<AtradiusReports> GenerateReport()
     {
-        _logger.Information("Start report generation");
+        _logger.Debug("Start report generation");
         var portfolio = await _operationsApi.GetPortfolioInvoiceInfo();
         var countries = await _operationsApi.GetCountriesInfo();
-        _logger.Information("Invoices and countries data received. Total invoices to report {InvoicesCount}", portfolio.Count);
+        _logger.Debug("Invoices and countries data received. Total invoices to report {InvoicesCount}", portfolio.Count);
         
         var countryCodeLookup = countries.ToDictionary(c => c.Code);
         var customerPairs = portfolio.Select(i => i.TradeRelation).ToList();
         var customersFile = _reportGenerator.GenerateCustomerReport(customerPairs, countryCodeLookup);
-        _logger.Debug("Customer file generated successfully");
+        _logger.Debug("Customer file generated successfully with {CustomersFileSize} bytes", customersFile.Length);
         
         var invoicesFile = _reportGenerator.GenerateInvoicesReport(portfolio);
-        _logger.Debug("Invoices file generated successfully");
+        _logger.Debug("Invoices file generated successfully with {InvoicesFileSize} bytes", invoicesFile.Length);
         
         return new AtradiusReports
         {
