@@ -35,10 +35,10 @@ public class AtradiusReportService : IAtradiusReportService
         var countryCodeLookup = countries.ToDictionary(c => c.Code);
         var customerPairs = portfolio.Select(i => i.TradeRelation).ToList();
         var customersFile = _reportGenerator.GenerateCustomerReport(customerPairs, countryCodeLookup);
-        _logger.Debug("Customer files generated successfully");
+        _logger.Debug("Customer file generated successfully");
         
         var invoicesFile = _reportGenerator.GenerateInvoicesReport(portfolio);
-        _logger.Debug("Invoices files generated successfully");
+        _logger.Debug("Invoices file generated successfully");
         
         return new AtradiusReports
         {
