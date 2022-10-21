@@ -9,7 +9,7 @@ public static class AtradiusFileConfig
 {
     public static readonly Encoding Utf8WithoutBom = new UTF8Encoding(false);
 
-    public const string DateFormat = "YYYYMMDD";
+    public const string DateFormat = "yyyyMMdd";
 
     public static readonly CsvConfiguration Config = new (CultureInfo.InvariantCulture)
     {
