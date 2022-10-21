@@ -21,7 +21,7 @@ public class CustomerFileGenerationTests
     };
 
     [Test]
-    public void FileGeneratedWithOneCustomerPair()
+    public void GenerateCustomerReport_WithOneCompanyPair_CreatesCorrectFile()
     {
         //Assert
         var testData = new[]
@@ -48,7 +48,7 @@ public class CustomerFileGenerationTests
     }
 
     [Test]
-    public void WhenTradeRelationsWithSameBuyerAndSellerShouldTakeOne()
+    public void GenerateCustomerReport_WhenTradeRelationsWithSameBuyerAndSeller_ShouldTakeOne()
     {
         //Arrange
         var testData = new[]
@@ -80,7 +80,7 @@ public class CustomerFileGenerationTests
     }
     
     [Test]
-    public void TwoDifferentCustomerPairsCreateTwoRows()
+    public void GenerateCustomerReport_WithTwoDifferentCustomerPairs_CreatesTwoRows()
     {
         //Arrange
         var testData = new[]

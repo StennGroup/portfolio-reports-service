@@ -12,7 +12,7 @@ namespace PortfolioReportsService.UnitTests.UnitTests;
 public class InvoiceFileGenerationTest
 {
     [Test]
-    public void TestInvoiceWritesCorrectly()
+    public void GenerateInvoicesReport_WithOneInvoice_WritesCorrectly()
     {
         //Arrange
         var invoices = new PortfolioInvoiceDto[]
