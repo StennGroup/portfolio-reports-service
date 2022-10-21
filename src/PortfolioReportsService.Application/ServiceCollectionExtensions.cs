@@ -10,6 +10,7 @@ namespace PortfolioReportsService.Application
         {
             serviceCollection.AddScoped<IAtradiusReportGenerator, AtradiusReportGenerator>();
             serviceCollection.AddScoped<IAtradiusReportService, AtradiusReportService>();
+            serviceCollection.AddScoped<IPortfolioSender, FtpPortfolioSender>();
             serviceCollection.AddAutoMapper(typeof(AutoMapperProfile));
             return serviceCollection;
         }
