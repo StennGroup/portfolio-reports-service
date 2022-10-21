@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using FluentFTP;
+using Limilabs.FTP.Client;
 using PortfolioReportsService.Application.Interfaces;
 using PortfolioReportsService.Infrastructure.Configuration;
 using Serilog;
@@ -17,15 +17,16 @@ class FtpPortfolioSender : IPortfolioSender
         _logger = logger;
     }
     
-    public async Task UploadAtradiusReport(AtradiusReports report)
+    public Task UploadAtradiusReport(AtradiusReports report)
     {
         _logger.Information("Start ftp report upload. Uploading bytes ARMAST: {ArmastFileSize}, ARMCUST: {ArmcustFileSize}",
             report.Armast.Length, report.Armcust.Length);
-        using var ftpClient = new AsyncFtpClient(_config.FtpConfig.Url, _config.FtpConfig.Login, _config.FtpConfig.Password);
-        await ftpClient.AutoConnect();
-        await ftpClient.UploadBytes(report.Armast, "/to_atradius/ARMAST.txt");
-        await ftpClient.UploadBytes(report.Armcust, "/to_atradius/ARCUST.txt");
-        await ftpClient.Disconnect();
+        using var ftpClient = new Ftp();
+        ftpClient.Connect(_config.FtpConfig.Url);
+        ftpClient.Login(_config.FtpConfig.Login, _config.FtpConfig.Password);
+        ftpClient.Upload("/to_atradius/ARMAST.txt", report.Armast);
+        ftpClient.Upload("/to_atradius/ARCUST.txt", report.Armcust);
         _logger.Information("Report files have been uploaded to ftp");
+        return Task.CompletedTask;
     }
 }
