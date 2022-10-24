@@ -79,8 +79,8 @@ public class AtradiusReportGenerator : IAtradiusReportGenerator
                 i => i.RepaymentAmountNationalCurrency.Amount.ToString(CultureInfo.InvariantCulture))
             .AddWithValue("TRANBAL",
                 i => i.RepaymentAmountOutstandingNationalCurrency.Amount.ToString(CultureInfo.InvariantCulture))
-            .AddConst("LOCORIG", "INVAMT")
-            .AddConst("LOCBAL", "BALANCE")
+            .AddWithValue("LOCORIG", i => i.RepaymentAmount.Amount.ToString(CultureInfo.InvariantCulture))
+            .AddWithValue("LOCBAL", i => i.RepaymentAmountOutstanding.Amount.ToString(CultureInfo.InvariantCulture))
             .AddWithValue("FLEXDATE1", i => i.DueDate.ToString(AtradiusFileConfig.DateFormat))
             .AddBlank("FLEXFIELD1")
             .AddBlank("FLEXFIELD2")
