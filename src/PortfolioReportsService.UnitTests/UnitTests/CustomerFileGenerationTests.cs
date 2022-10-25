@@ -46,6 +46,35 @@ public class CustomerFileGenerationTests
         rowToCheck["CUSTNO"].Should().Be("1seller-1");
         rowToCheck["COUNTRY"].Should().Be("Chile");
     }
+    
+    [Test]
+    public void GenerateCustomerReport_WithAddressMoreThen50Chars_TruncatesAddressField()
+    {
+        //Assert
+        var testData = new[]
+        {
+            AtradiusReportTestUtils.TradeRelationFixture(tr =>
+            {
+                tr.Buyer.Duns = "1";
+                tr.Seller.SourceSystemId = "seller-1";
+                tr.Buyer.BillingStreet = new string('A', 70);
+            }),
+        };
+        var fileGenerator = new AtradiusReportGenerator();
+        
+        //Act
+        var file = fileGenerator.GenerateCustomerReport(testData, _countries);
+        
+        //Assert
+        var fileRows =  AtradiusReportTestUtils.ReadAtradiusFileToDictionary(file);
+
+        fileRows.Should().HaveCount(1);
+        var rowToCheck = fileRows.First();
+
+        rowToCheck["CUSTNO"].Should().Be("1seller-1");
+        rowToCheck["COUNTRY"].Should().Be("Chile");
+        rowToCheck["ADDRESS1"].Should().HaveLength(50);
+    }
 
     [Test]
     public void GenerateCustomerReport_WhenTradeRelationsWithSameBuyerAndSeller_ShouldTakeOne()
