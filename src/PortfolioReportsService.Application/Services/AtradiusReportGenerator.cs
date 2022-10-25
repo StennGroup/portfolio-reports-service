@@ -22,8 +22,8 @@ public class AtradiusReportGenerator : IAtradiusReportGenerator
         var builder = new CsvBuilder<TradeRelationDto>();
         builder.AddWithValue("CUSTNO", d => d.Buyer.Duns + d.Seller.SourceSystemId)
             .AddWithValue("COMPANY", d => d.Buyer.Name)
-            .AddWithValue("ADDRESS1", d => d.Buyer.BillingStreet)
-            .AddWithValue("ADDRESS2", d => d.Buyer.BillingCity + " " + d.Buyer.BillingPostalCode)
+            .AddWithValue("ADDRESS1", d => d.Buyer.BillingStreet, 50)
+            .AddWithValue("ADDRESS2", d => d.Buyer.BillingCity + " " + d.Buyer.BillingPostalCode, 50)
             .AddBlank("ADDRESS3")
             .AddBlank("CITY")
             .AddBlank("STATE")
