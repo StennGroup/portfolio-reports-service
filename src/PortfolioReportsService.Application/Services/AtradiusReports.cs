@@ -2,6 +2,6 @@
 
 public class AtradiusReports
 {
-    public byte[] Armast { get; set; }
-    public byte[] Armcust { get; set; }
+    public byte[] Armast { get; set; } = null!;
+    public byte[] Armcust { get; set; } = null!;
 }
