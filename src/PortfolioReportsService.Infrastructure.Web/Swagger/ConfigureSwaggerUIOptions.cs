@@ -24,7 +24,7 @@ namespace PortfolioReportsService.Infrastructure.Web.Swagger
             foreach (var apiVersion in _versionInfoProvider.Versions)
             {
                 var name = apiVersion.RoutePathName;
-                options.SwaggerEndpoint($"/swagger/{name}/swagger.json", name);
+                options.SwaggerEndpoint($"swagger/{name}/swagger.json", name);
             }
 
             options.RoutePrefix = string.Empty;
