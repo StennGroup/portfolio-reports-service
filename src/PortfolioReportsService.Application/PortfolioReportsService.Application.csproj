@@ -8,11 +8,13 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
         <PackageReference Include="CsvHelper" Version="29.0.0" />
+        <PackageReference Include="Ftp.dll" Version="2.0.22269.922" />
         <PackageReference Include="Seedwork.Auth" Version="14.0.0" />
         <PackageReference Include="Seedwork.Messaging.Abstractions" Version="14.0.0" />
         <PackageReference Include="Seedwork.UnitOfWork" Version="14.0.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\PortfolioReportService.InteropAbstractions\PortfolioReportService.InteropAbstractions.csproj" />
+      <ProjectReference Include="..\PortfolioReportsService.Infrastructure.Configuration\PortfolioReportsService.Infrastructure.Configuration.csproj" />
     </ItemGroup>
 </Project>
