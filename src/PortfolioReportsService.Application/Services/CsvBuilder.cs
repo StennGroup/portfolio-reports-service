@@ -6,9 +6,9 @@ namespace PortfolioReportsService.Application.Services;
 
 public class CsvBuilder<T>
 {
-    private readonly List<(string, Func<T, string>, int)> _fields = new();
+    private readonly List<(string, Func<T, string?>, int)> _fields = new();
 
-    public CsvBuilder<T> AddWithValue(string field, Func<T, string> map, int maxLength = 50)
+    public CsvBuilder<T> AddWithValue(string field, Func<T, string?> map, int maxLength = 50)
     {
         _fields.Add((field, map, maxLength));
         return this;
@@ -28,7 +28,7 @@ public class CsvBuilder<T>
         {
             foreach (var (_, fieldMapping, maxLength) in _fields)
             {
-                var value = fieldMapping(entry);
+                var value = fieldMapping(entry) ?? string.Empty;
                 writer.WriteField(value.Substring(0, Math.Min(value.Length, maxLength)));
             }
                 
