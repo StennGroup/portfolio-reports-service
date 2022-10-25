@@ -22,13 +22,13 @@ public class AtradiusReportController : Controller
         _portfolioSender = portfolioSender;
     }
 
-    [HttpGet("send-report")]
+    [HttpGet("send")]
     public async Task SendAtradiusReport()
     {
         await _taskExecutor.Execute(SendAtradiusReportInternal(), Response);
     }
 
-    [HttpGet("get-report")]
+    [HttpGet("get")]
     public async Task<FileResult> GetAtradiusReport()
     {
         var reportFiles = await _reportService.GenerateReport();
