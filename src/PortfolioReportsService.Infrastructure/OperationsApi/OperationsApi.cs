@@ -28,7 +28,7 @@ public class OperationsApi : IOperationsApi
     public async Task<IReadOnlyCollection<PortfolioInvoiceDto>> GetPortfolioInvoiceInfo()
     {
         var response = await _httpClient.GetFromJsonAsync<ODataResponse<List<PortfolioInvoiceDto>>>("api/odata/v1/invoices?" +
-            "$filter=repaymentAmountOutstanding/amount gt 0 and owner eq 'SDF' and state ne 'Repaid'&" +
+            "$filter=repaymentAmountOutstanding/amount gt 0 and owner eq 'SDF' and state eq 'Financed'&" +
             "$select=id,repaymentAmountOutstanding,repaymentAmount,supplyDate,dueDate,repaymentAmountNationalCurrency,repaymentAmountOutstandingNationalCurrency&" +
             "$expand=tradeRelation($select=id;$expand=buyer($select=duns,name,sourceSystemId,billingStreet,billingCity,billingPostalCode, country)," +
                 "seller($select=duns,name,sourceSystemId,billingStreet,billingCity,billingPostalCode, country))");
