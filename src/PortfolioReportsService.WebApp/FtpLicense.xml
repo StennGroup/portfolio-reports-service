@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<License>
+  <Id>c3f509ed-3246-4303-beb8-6066505e763d</Id>
+  <ProductName>Ftp.dll</ProductName>
+  <SubscriptionUntil>2023-08-09</SubscriptionUntil>
+  <RegisteredTo>Stenn International Limited</RegisteredTo>
+  <LicenseType>company</LicenseType>
+  <BuyerName>Stenn International Limited</BuyerName>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>uIPKFXCL/JMH23TnN/EhXbEtJtI=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>rfGR9HQsRG+sLr4d07KhhUpsErz2zqrDeyVfY43YrRfr7kQAjcl2uMVuYg4laBENo3i8ojqw3EIcXQlpQ7zF8TuiFCgPkQGUQU8zjcWMtoKF4FYU4mcvj+z2IR0dn+OIMA/lfPRKon369XG2RAwpZQ4MeUBZZxJYiELzOtMSCRw=</SignatureValue>
+  </Signature>
+</License>

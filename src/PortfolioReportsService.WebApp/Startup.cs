@@ -49,9 +49,7 @@ namespace PortfolioReportsService.WebApp
 
             services.AddScoped<SecurityContextProvider>();
             services.AddScoped<IUserContext>(p => p.GetRequiredService<SecurityContextProvider>().Context);
-
-            services.AddScoped<IAtradiusReportGenerator, AtradiusReportGenerator>();
-            services.AddScoped<AtradiusReportService>();
+            
             services.AddOperationsClient(serviceConfiguration);
 
             services.AddHttpContextAccessor();
@@ -92,6 +90,8 @@ namespace PortfolioReportsService.WebApp
                 services.AddSwagger();
             services
                 .AddApplicationServices();
+            
+            services.AddScoped<LongTaskWebExecutor>();
         }
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)

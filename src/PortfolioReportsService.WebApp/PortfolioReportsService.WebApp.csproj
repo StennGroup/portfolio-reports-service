@@ -35,4 +35,10 @@
         <ProjectReference Include="..\PortfolioReportsService.Infrastructure\PortfolioReportsService.Infrastructure.csproj" />
         <ProjectReference Include="..\PortfolioReportsService.Persistence.Write\PortfolioReportsService.Persistence.Write.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="FtpLicense.xml" />
+      <Content Include="FtpLicense.xml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>
