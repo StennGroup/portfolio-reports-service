@@ -44,8 +44,7 @@ namespace PortfolioReportsService.WebApp
             var serviceConfiguration = Configuration.Get<PortfolioReportsServiceConfiguration>();
             services.RemoveRoutingNotForProduction(ConfigurationDto.ConfigType == ConfigType.Prod);
 
-            ConfigureAuthentication(services, serviceConfiguration.Auth0Configuration,
-                serviceConfiguration.ConfigType == ConfigType.Dev);
+            ConfigureAuthentication(services);
 
             services.AddScoped<SecurityContextProvider>();
             services.AddScoped<IUserContext>(p => p.GetRequiredService<SecurityContextProvider>().Context);
@@ -121,8 +120,7 @@ namespace PortfolioReportsService.WebApp
             @"\/favicon.*"
         });
 
-        private void ConfigureAuthentication(IServiceCollection services, Auth0Configuration configuration,
-            bool development = true)
+        private void ConfigureAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
                 .AddBasic(options =>
