@@ -8,27 +8,27 @@ using Seedwork.Web;
 
 namespace PortfolioReportsService.WebApp.Controllers;
 
-[Route("api/v1/report")]
-public class AtradiusReportController : Controller
+[Route("api/v1/atradius")]
+public class AtradiusController : Controller
 {
     private readonly IAtradiusReportService _reportService;
     private readonly LongTaskWebExecutor _taskExecutor;
     private readonly IPortfolioSender _portfolioSender;
 
-    public AtradiusReportController(IAtradiusReportService reportService, LongTaskWebExecutor taskExecutor, IPortfolioSender portfolioSender)
+    public AtradiusController(IAtradiusReportService reportService, LongTaskWebExecutor taskExecutor, IPortfolioSender portfolioSender)
     {
         _reportService = reportService;
         _taskExecutor = taskExecutor;
         _portfolioSender = portfolioSender;
     }
 
-    [HttpGet("send")]
+    [HttpGet("SendPortfolioToAtradius")]
     public async Task SendAtradiusReport()
     {
         await _taskExecutor.Execute(SendAtradiusReportInternal(), Response);
     }
 
-    [HttpGet("get")]
+    [HttpGet("GetPortfolioFiles")]
     public async Task<FileResult> GetAtradiusReport()
     {
         var reportFiles = await _reportService.GenerateReport();
