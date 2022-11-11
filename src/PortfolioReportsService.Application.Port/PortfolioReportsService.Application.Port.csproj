@@ -6,8 +6,4 @@
         <NoWarn>$(NoWarn);1591;1585</NoWarn>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Repositories" />
-    </ItemGroup>
-
 </Project>
