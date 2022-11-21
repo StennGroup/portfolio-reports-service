@@ -24,8 +24,8 @@ class FtpPortfolioSender : IPortfolioSender
         using var ftpClient = new Ftp();
         ftpClient.Connect(_config.FtpConfig.Url);
         ftpClient.Login(_config.FtpConfig.Login, _config.FtpConfig.Password);
-        ftpClient.Upload("/to_atradius/ARMAST.txt", report.Armast);
-        ftpClient.Upload("/to_atradius/ARCUST.txt", report.Armcust);
+        ftpClient.Upload($"/to_atradius/ARMAST_{report.Date:dd-MM-yyyy}.txt", report.Armast);
+        ftpClient.Upload($"/to_atradius/ARCUST_{report.Date:dd-MM-yyyy}.txt", report.Armcust);
         _logger.Information("Report files have been uploaded to ftp");
         return Task.CompletedTask;
     }
