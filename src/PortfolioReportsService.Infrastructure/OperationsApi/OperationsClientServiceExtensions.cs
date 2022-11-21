@@ -19,7 +19,7 @@ public static class OperationsClientServiceExtensions
         services.AddTransient<HttpLoggingHandler>();
         services.AddHttpClient<IOperationsApi, OperationsApi>(
                 client => client.BaseAddress = new Uri($"{configuration.RootUrlOperationsApi}/"))
-            //.AddHttpMessageHandler<OperationsApiAuthenticationHandler>()
+            .AddHttpMessageHandler<OperationsApiAuthenticationHandler>()
             .AddHttpMessageHandler<HttpLoggingHandler>();
         return services;
     }
