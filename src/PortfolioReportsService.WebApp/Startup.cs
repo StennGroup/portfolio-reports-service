@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using idunno.Authentication.Basic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -16,9 +19,12 @@ using Seedwork.Web.Extensions;
 using Seedwork.Web.HealthChecks;
 using Seedwork.Web.Middleware;
 using PortfolioReportsService.Application;
+using PortfolioReportsService.Application.Interfaces;
 using PortfolioReportsService.Application.Port;
+using PortfolioReportsService.Application.Services;
 using PortfolioReportsService.Infrastructure;
 using PortfolioReportsService.Infrastructure.Configuration;
+using PortfolioReportsService.Infrastructure.OperationsApi;
 using PortfolioReportsService.Infrastructure.Web;
 using PortfolioReportsService.Persistence;
 using PortfolioReportsService.Persistence.Write;
@@ -38,18 +44,18 @@ namespace PortfolioReportsService.WebApp
             var serviceConfiguration = Configuration.Get<PortfolioReportsServiceConfiguration>();
             services.RemoveRoutingNotForProduction(ConfigurationDto.ConfigType == ConfigType.Prod);
 
-            ConfigureAuthentication(services, serviceConfiguration.Auth0Configuration,
-                serviceConfiguration.ConfigType == ConfigType.Dev);
+            ConfigureAuthentication(services);
 
             services.AddScoped<SecurityContextProvider>();
             services.AddScoped<IUserContext>(p => p.GetRequiredService<SecurityContextProvider>().Context);
+            
+            services.AddOperationsClient(serviceConfiguration);
 
             services.AddHttpContextAccessor();
 
             services.AddControllers(options =>
                 {
                     options.Filters.Add<PerformanceLoggerFilter>();
-                    options.Filters.Add<TransactionControlFilter>();
                     options.Filters.Add(new AuthorizeFilter());
                 })
                 .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
@@ -76,21 +82,19 @@ namespace PortfolioReportsService.WebApp
                             .AllowAnyHeader();
                     });
             });
-
-            services.AddUnitOfWork<PortfolioReportsServiceDbContext>();
-            services.AddTaskExecutor();
+            
 
             services.AddApiVersion();
             if (ConfigurationDto.ConfigType != ConfigType.Prod)
                 services.AddSwagger();
             services
-                .AddApplicationServices()
-                .AddRepositories();
+                .AddApplicationServices();
+            
+            services.AddScoped<LongTaskWebExecutor>();
         }
 
         protected override void AddHealthChecks(IHealthChecksBuilder builder)
         {
-           
         }
 
         protected override void DoConfigure(IApplicationBuilder builder)
@@ -116,38 +120,39 @@ namespace PortfolioReportsService.WebApp
             @"\/favicon.*"
         });
 
-        private static void ConfigureAuthentication(IServiceCollection services, Auth0Configuration configuration,
-            bool development = true)
+        private void ConfigureAuthentication(IServiceCollection services)
         {
-            var builder = AuthBuilder
-                .CreateDefaultAuth0BearerAuthentication(
-                    services,
-                    configuration.Auth0Domain,
-                    configuration.Auth0Audience,
-                    configuration.Auth0OpenIdConnectConfigurationEndpoint)
-                .AddAuthLogger<AuthLogger>()
-                .AddTokenExtractor<DefaultTokenExtractor>()
-                .AddTokenValidator<DefaultTokenValidator>();
+            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasic(options =>
+                {
+                    options.Realm = "Operations Notifier API";
+                    options.AllowInsecureProtocol = false;
+                    options.Events = new BasicAuthenticationEvents
+                    {
+                        OnValidateCredentials = ctx =>
+                        {
+                            if (ctx.Username == ConfigurationDto.BasicAuthentication.Login &&
+                                ctx.Password == ConfigurationDto.BasicAuthentication.Password)
+                            {
+                                var claims = new[]
+                                {
+                                    new Claim(ClaimTypes.NameIdentifier, ctx.Username, ClaimValueTypes.String,
+                                        ctx.Options.ClaimsIssuer),
+                                    new Claim(ClaimTypes.Name, ctx.Username, ClaimValueTypes.String,
+                                        ctx.Options.ClaimsIssuer)
+                                };
+                                ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, ctx.Scheme.Name));
+                                ctx.Success();
+                            }
+                            else
+                            {
+                                ctx.Fail("Invalid login or password");
+                            }
 
-            if (development)
-            {
-                builder
-                    .AddTokenValidator<OfflineTokenValidator>()
-                    .DisableOnBuildOpenIdConfigurationEndpointCheck();
-            }
-
-            builder
-                .AddDefaultUserWithoutAuthorizationFlowHandler()
-                .Build();
-        }
-
-        private void ConfigureDbContexts(IServiceCollection services)
-        {
-            services.AddDbContext<PortfolioReportsServiceDbContext>(options =>
-            {
-                options
-                    .UseSqlServer(ConfigurationDto.PortfolioReportsServiceDbContext);
-            });
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
         }
     }
 }
