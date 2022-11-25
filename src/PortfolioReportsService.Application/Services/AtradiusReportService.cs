@@ -41,7 +41,7 @@ public class AtradiusReportService : IAtradiusReportService
         {
             Date = _systemDate.Today,
             Armast = invoicesFile,
-            Armcust = customersFile
+            Arcust = customersFile
         };
     }
 }
