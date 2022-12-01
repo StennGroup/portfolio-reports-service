@@ -12,6 +12,7 @@
         <PackageReference Include="Ftp.dll" Version="2.0.22269.922" />
         <PackageReference Include="Seedwork.Auth" Version="14.0.0" />
         <PackageReference Include="Seedwork.Messaging.Abstractions" Version="14.0.0" />
+        <PackageReference Include="Seedwork.SystemDate" Version="15.1.0" />
         <PackageReference Include="Seedwork.UnitOfWork" Version="14.0.0" />
     </ItemGroup>
     <ItemGroup>

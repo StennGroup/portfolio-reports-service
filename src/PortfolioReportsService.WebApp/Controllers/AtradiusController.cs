@@ -38,7 +38,7 @@ public class AtradiusController : Controller
             {
                 var arcustEntry = archive.CreateEntry("ARCUST.txt");
                 using (var fileStream = arcustEntry.Open())
-                    fileStream.Write(reportFiles.Armcust);
+                    fileStream.Write(reportFiles.Arcust);
 
                 var armastEntry = archive.CreateEntry("ARMAST.txt");
                 using (var fileStream = armastEntry.Open())
