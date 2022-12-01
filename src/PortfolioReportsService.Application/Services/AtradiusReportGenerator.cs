@@ -34,6 +34,7 @@ public class AtradiusReportGenerator : IAtradiusReportGenerator
             .AddBlank("TITLE")
             .AddBlank("TERR")
             .AddConst("LOCCURR", "USD")
+            .AddBlank("EXT_FEDID")
             .AddBlank("FIRSTNAME")
             .AddBlank("LASTNAME")
             .AddWithValue("BUSINESSUNIT", d => d.Seller.SourceSystemId)

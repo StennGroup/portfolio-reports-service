@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using PortfolioReportService.InteropAbstractions.OperationsApi;
 using PortfolioReportsService.Application.Interfaces;
+using Seedwork.SystemDate;
 using Serilog;
 
 namespace PortfolioReportsService.Application.Services;
@@ -11,12 +12,14 @@ public class AtradiusReportService : IAtradiusReportService
     private readonly IOperationsApi _operationsApi;
     private readonly IAtradiusReportGenerator _reportGenerator;
     private readonly ILogger _logger;
+    private readonly ISystemDate _systemDate;
 
-    public AtradiusReportService(IOperationsApi operationsApi, IAtradiusReportGenerator reportGenerator, ILogger logger)
+    public AtradiusReportService(IOperationsApi operationsApi, IAtradiusReportGenerator reportGenerator, ILogger logger, ISystemDate systemDate)
     {
         _operationsApi = operationsApi;
         _reportGenerator = reportGenerator;
         _logger = logger;
+        _systemDate = systemDate;
     }
 
     public async Task<AtradiusReports> GenerateReport()
@@ -36,8 +39,9 @@ public class AtradiusReportService : IAtradiusReportService
         
         return new AtradiusReports
         {
+            Date = _systemDate.Today,
             Armast = invoicesFile,
-            Armcust = customersFile
+            Arcust = customersFile
         };
     }
 }
